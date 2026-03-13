@@ -1,0 +1,56 @@
+import matplotlib.pyplot as plt
+
+class Casiila:
+    def __init__(self, x, y, EsMuro):
+        self.x = x
+        self.y = y
+        self.EsMuro = EsMuro
+
+class Laberinto:
+    def __init__(self, StLab):
+        self.Tablero = []
+        self.Inicio = [None, None]
+        self.Final = [None, None]
+
+        for x in range(len(StLab)):
+            Fila = []
+            for y in range(len(StLab[x])):
+                Fila.append(Casiila(x, y, StLab[x][y] == "#"))
+
+                if StLab[x][y] == "I":
+                    self.Inicio = [x,y]
+                
+                elif StLab[x][y] == "T":
+                    self.Final=[x,y]
+                
+            self.Tablero.append(Fila)
+
+    def Pintar (self):
+        for x in range(len(self.Tablero)):
+            for y in range(len(self.Tablero[x])):
+                if self.Tablero[x][y].EsMuro:
+                    plt.plot ([y], [len(self.Tablero)-x-1], linestyle = 'None', marker= '.', markersize = 8, color = 'black')
+        plt.plot([self.Inicio[1]],[len(self.Tablero)-self.Inicio[0]-1],linestyle= 'None', marker = '.', markersize = 14, color = 'blue')
+        plt.plot([self.Final[1]],[len(self.Tablero)-self.Final[0]-1],linestyle= 'None', marker = '.', markersize = 14, color = 'green')
+
+
+
+
+
+def leer_mapa(FILENAME):
+    mapa=[]
+
+    with open(FILENAME, 'r') as archivo:
+        for linea in archivo:
+            mapa.append(list(linea.strip()))
+    return mapa
+
+
+
+
+mapa = leer_mapa("mapa.txt")
+
+
+L=Laberinto(mapa)
+L.Pintar()
+plt.show()

@@ -14,7 +14,7 @@ def generar_matriz(filas, columnas):
         return "Los datos ingresados son invalidos"
 
 
-def character_tesoro(row, col):
+def character(row, col, caracter = ''):
     with open (FILENAME, 'r+') as archivo:        
         row_length = len(archivo.readline())
         archivo.seek(0)
@@ -22,7 +22,7 @@ def character_tesoro(row, col):
         posicion = row * row_length + col +row #row*tamannioFilas + columna
         
         archivo.seek(posicion) 
-        archivo.write("T")
+        archivo.write(caracter)
 
 #E: cordenadas en lista
 #S: none
@@ -32,10 +32,10 @@ def obstaculos(coord):
         archivo.seek(0)
 
         for i in range(len(coord)-1):
-            row1=coord[i][0] -1
-            col1= coord[i][1] -1
-            row2=coord[i+1][0] -1
-            col2= coord[i+1][1] -1
+            row1 = coord[i][0] -1
+            col1 = coord[i][1] -1
+            row2 = coord[i+1][0] -1
+            col2 = coord[i+1][1] -1
 
             if row1 == row2: #Parte horizontal
                 for c in range(min(col1, col2), max(col1, col2)+1):
@@ -63,8 +63,9 @@ def generador_mapa():
         1.Crear Mapa
         2. Colocar Tesoro
         3. Colocar Obstaculos
-        4. Ver mapa
-        5. Salir
+        4. Colocar posicion Inicial
+        5. Ver mapa
+        6. Salir
         """)
         opcion= int(input("Opcion a elegir: "))
 
@@ -84,7 +85,7 @@ def generador_mapa():
             fila = int(input("Fila: "))-1
             columna = int(input("Columna: "))-1
 
-            character_tesoro(fila, columna)
+            character(fila, columna, 'T')
             
         
         elif opcion == 3:
@@ -111,11 +112,23 @@ def generador_mapa():
                     print("Formato de coordenadas incorrecto")
 
             obstaculos(coordenadas)
-            
+
         elif opcion == 4:
-            ver_mapa()
+            print("Indique en que fila y columna desea partir jugandoa")
+            print("Segun este rango")
+            print(f"Fila: 1 - {size_row}")
+            print(f"Columna: 1-{size_col}")
+            
+            fila = int(input("Fila: "))-1
+            columna = int(input("Columna: "))-1
+
+            character(fila, columna, 'I')
+
 
         elif opcion == 5:
+            ver_mapa()
+
+        elif opcion == 6:
             print("Saliendo del programa...")
             break
             

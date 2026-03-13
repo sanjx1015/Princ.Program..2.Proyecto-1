@@ -39,30 +39,34 @@ def solve(mapa, row, col):
         return True
     
     #Topo con obstaculo
-    if (mapa[row][col]== "#" or mapa[row][col]=="*"):
+    if (mapa[row][col])== "#" or mapa[row][col] == "v"or mapa[row][col] == "*":
         return False
     
-    mapa[row][col] = "*"
+    
+    mapa[row][col] = "v"
 
 
 
     if solve(mapa, row - 1, col): #Arriba
+        mapa[row][col] = "*"
         return True
     
     if solve(mapa, row + 1, col): #Abajo
+        mapa[row][col] = "*"
         return True
     
     if solve(mapa, row, col-1): #Izquierda
+        mapa[row][col] = "*"
         return True
     
     if solve(mapa, row, col+1): #Derecha
+        mapa[row][col] = "*"
         return True
     
-    #BacKTracking
-    mapa[row][col] = '.'
+    mapa[row][col] == "."
     return False
-        
 
+        
 def resolver_mapa ():
     if solve(mapa, fila, columna):
         print("Camino encontrado:")

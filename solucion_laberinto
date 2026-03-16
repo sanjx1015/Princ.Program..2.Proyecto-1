@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 
+mapa_solucion = []
+
 class Casilla:
     def __init__(self, x, y, EsMuro):
         self.x = x
@@ -32,6 +34,7 @@ class Laberinto:
                 
             self.Tablero.append(Fila)
         self.Camino.append(self.Tablero[self.Inicio[0]][self.Inicio[1]])
+
 
     def Avanzar (self):
         C=self.Camino[-1]
@@ -66,9 +69,11 @@ class Laberinto:
                 Cs.Entrada = 'Right'
                 self.Camino.append(Cs)
                 return
-            
+
+         
         self.Camino.pop()
-    
+        
+
     def Finalizado(self):
         if len(self.Camino)== 0: return True
         C= self.Camino[-1]
@@ -98,12 +103,12 @@ def leer_mapa(FILENAME):
     return mapa
 
 
-
-
 mapa = leer_mapa("mapa.txt")
+
 
 PocoAPoco = True
 L=Laberinto(mapa)
+
 
 if not PocoAPoco:
     while not L.Finalizado():
@@ -123,3 +128,11 @@ else:
 L.Pintar()
 plt.show()
 
+
+for c in L.Camino:
+    mapa_solucion.append((c.x, c.y))
+
+for fila in mapa:
+    print("".join(fila))
+
+print("Solucion: ", mapa_solucion)
